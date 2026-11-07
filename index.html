@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="MapaVivo: descubre restaurantes, bares, farmacias y todo tipo de lugares cerca de ti sobre un mapa interactivo." />
+  <meta name="theme-color" content="#6d5efc" />
+  <title>MapaVivo · Descubre lugares cerca de ti</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#6d5efc" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MapaVivo" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png" />
+
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="vendor/leaflet-markercluster/MarkerCluster.css" />
+  <link rel="stylesheet" href="vendor/leaflet-markercluster/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ───────────────────────── Panel lateral ───────────────────────── -->
+    <aside id="sidebar" aria-label="Panel de lugares">
+      <header class="brand">
+        <div class="brand-logo" aria-hidden="true">🗺️</div>
+        <div class="brand-text">
+          <h1>MapaVivo</h1>
+          <p>Lugares cerca de ti</p>
+        </div>
+        <button id="btn-theme" class="icon-btn" type="button" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
+        <button id="btn-close" class="icon-btn mobile-only" type="button" title="Cerrar panel" aria-label="Cerrar panel">✕</button>
+      </header>
+
+      <div class="search">
+        <span class="search-icon" aria-hidden="true">🔎</span>
+        <input id="q" type="search" placeholder="Busca una dirección o ciudad…" autocomplete="off"
+               aria-label="Buscar dirección o ciudad" />
+        <button id="btn-clear-q" class="search-clear" type="button" hidden aria-label="Borrar búsqueda">✕</button>
+        <div id="suggest" class="suggest" role="listbox" hidden></div>
+      </div>
+
+      <div class="cats-head">
+        <span>Categorías</span>
+        <div class="cats-actions">
+          <button id="btn-reload" class="mini-btn" type="button" title="Recargar lugares">⟳ Recargar</button>
+          <button id="btn-clear" class="mini-btn" type="button" title="Quitar todas las categorías">Limpiar</button>
+        </div>
+      </div>
+
+      <div id="cats" class="cats"></div>
+
+      <div class="radius">
+        <span>Radio</span>
+        <div class="seg" role="group" aria-label="Radio de búsqueda">
+          <button type="button" data-r="500">500 m</button>
+          <button type="button" data-r="1000" class="on">1 km</button>
+          <button type="button" data-r="2000">2 km</button>
+          <button type="button" data-r="5000">5 km</button>
+        </div>
+      </div>
+
+      <div class="quickbar">
+        <div class="viewtabs" role="tablist" aria-label="Vista de lugares">
+          <button id="tab-nearby" class="on" type="button" role="tab" aria-selected="true">📍 Cerca de ti</button>
+          <button id="tab-favs" type="button" role="tab" aria-selected="false">★ Favoritos <span id="fav-count" class="tab-count">0</span></button>
+        </div>
+        <button id="btn-open-now" class="chip-toggle" type="button" aria-pressed="false"
+                title="Ocultar los lugares cerrados ahora">🟢 Abierto</button>
+      </div>
+
+      <div class="list-head">
+        <strong id="list-title">Lugares</strong>
+        <span id="list-sub"></span>
+      </div>
+      <div id="list" class="list" role="list"></div>
+
+      <button id="btn-install" class="install-btn" type="button" hidden>📲 Instalar en el móvil</button>
+
+      <footer class="foot">
+        <span>Datos © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></span>
+        <span class="ver">v1.1</span>
+      </footer>
+    </aside>
+
+    <!-- ───────────────────────── Mapa ───────────────────────── -->
+    <main class="map-wrap">
+      <div id="map"></div>
+
+      <button id="btn-menu" class="fab fab-menu" type="button" title="Abrir panel" aria-label="Abrir panel">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+
+      <button id="search-here" class="pill" type="button">◎ Buscar en esta zona</button>
+
+      <button id="btn-locate" class="fab fab-locate" type="button" title="Usar mi ubicación" aria-label="Usar mi ubicación">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="7" />
+          <circle cx="12" cy="12" r="2.4" />
+          <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3" />
+        </svg>
+      </button>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+
+    <div id="backdrop" class="backdrop"></div>
+  </div>
+
+  <noscript>
+    <p style="padding:20px;font-family:sans-serif">MapaVivo necesita JavaScript para funcionar.</p>
+  </noscript>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="vendor/leaflet-markercluster/leaflet.markercluster.js"></script>
+  <script src="js/categories.js"></script>
+  <script src="js/openhours.js"></script>
+  <script src="js/overpass.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

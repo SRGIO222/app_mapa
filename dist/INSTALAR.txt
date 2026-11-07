@@ -1,0 +1,43 @@
+🗺️  MapaVivo 1.1  ·  APK para Android
+========================================
+
+REQUISITOS
+  · Android 7.0 o superior (Android 8+ recomendado).
+  · Conexión a internet (mapa y lugares).
+  · Permiso de ubicación para centrar el mapa en ti.
+
+INSTALAR
+  1. Copia MapaVivo-1.1.apk al móvil (cable USB, Google Drive, WhatsApp…).
+  2. Ábrelo desde el móvil (Archivos / Descargas).
+  3. Si Android avisa de "origen desconocido", pulsa Ajustes y permite
+     instalar apps desde esa aplicación (Archivos o el navegador).
+  4. Pulsa Instalar. Si Play Protect muestra un aviso por ser una app
+     firmada fuera de Google Play, elige "Instalar de todos modos".
+  5. Abre MapaVivo y acepta el permiso de ubicación.
+
+USAR
+  · Elige categorías (🍽️ restaurantes, 💊 farmacias, ⛽ gasolineras…).
+  · Pulsa 🎯 para volver a tu ubicación.
+  · Toca un lugar de la lista para ver su ficha y "Cómo llegar".
+
+NUEVO EN LA 1.1
+  · Favoritos ★: toca la estrella de un lugar y aparecerá en la pestaña
+    "Favoritos". Se guardan aunque cierres la app y se pueden ver sin conexión.
+  · Filtro "🟢 Abierto": oculta los lugares que constan como cerrados ahora
+    (según los horarios de OpenStreetMap).
+  · Compartir: en la ficha de cada lugar, botón "Compartir" para enviar el
+    enlace por WhatsApp, correo, etc. (o copiarlo al portapapeles).
+  · Sin conexión: si falla internet, la app muestra los últimos lugares
+    guardados con la fecha de esos datos.
+  · Buscador con historial de las últimas búsquedas.
+  · Tiempo a pie aproximado en cada ficha.
+
+SI NO PIDE LA UBICACIÓN
+  Ajustes → Aplicaciones → MapaVivo → Permisos → Ubicación → Permitir.
+  Activa también la ubicación del sistema.
+
+NOTAS
+  · App autofirmada, no distribuida por Google Play.
+  · Para actualizar a una versión futura hay que conservar la misma clave
+    de firma (android/keystore/mapavivo.jks).
+  · Datos © OpenStreetMap.
